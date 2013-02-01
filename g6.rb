@@ -13,8 +13,9 @@ class Player
   attr_reader :score
 
   def initialize(window)
-    @image = Gosu::Image.new(window, "media/Starfighter.2.bmp", false)
-    @beep = Gosu::Sample.new(window, "media/Beep.wav")
+    @window = window
+    @image = Gosu::Image.new(@window, "media/Starfighter.2.bmp", false)
+    @beep = Gosu::Sample.new(@window, "media/Beep.wav")
     @x = @y = @vel_x = @vel_y = @angle = 0.0
     @score = 0
   end
@@ -72,16 +73,16 @@ class Player
   end
 
   def get_movements(window)
-    if window.button_down? Gosu::KbLeft or window.button_down? Gosu::GpLeft then
+    if @window.button_down? Gosu::KbLeft or @window.button_down? Gosu::GpLeft then
       turn_left
     end
-    if window.button_down? Gosu::KbRight or window.button_down? Gosu::GpRight then
+    if @window.button_down? Gosu::KbRight or @window.button_down? Gosu::GpRight then
       turn_right
     end
-    if window.button_down? Gosu::KbUp or window.button_down? Gosu::GpButton0 then
+    if @window.button_down? Gosu::KbUp or @window.button_down? Gosu::GpButton0 then
       accelerate
     end
-    if window.button_down? Gosu::KbDown or window.button_down? Gosu::GpButton1 then
+    if @window.button_down? Gosu::KbDown or @window.button_down? Gosu::GpButton1 then
       brake
     end
   end
@@ -226,7 +227,7 @@ class GameWindow < Gosu::Window
 
   
   def update
-    @player.get_movements(self)
+    @player.get_movements
     @player.move
     @player.collect_stars(@stars)
 
