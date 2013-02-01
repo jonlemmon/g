@@ -70,6 +70,22 @@ class Player
       end
     end
   end
+
+  def get_movements(window)
+    if window.button_down? Gosu::KbLeft or window.button_down? Gosu::GpLeft then
+      turn_left
+    end
+    if window.button_down? Gosu::KbRight or window.button_down? Gosu::GpRight then
+      turn_right
+    end
+    if window.button_down? Gosu::KbUp or window.button_down? Gosu::GpButton0 then
+      accelerate
+    end
+    if window.button_down? Gosu::KbDown or window.button_down? Gosu::GpButton1 then
+      brake
+    end
+  end
+
 end
 
 
@@ -210,19 +226,7 @@ class GameWindow < Gosu::Window
 
   
   def update
-     if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft then
-      @player.turn_left
-    end
-    if button_down? Gosu::KbRight or button_down? Gosu::GpRight then
-      @player.turn_right
-    end
-    if button_down? Gosu::KbUp or button_down? Gosu::GpButton0 then
-      @player.accelerate
-    end
-    if button_down? Gosu::KbDown or button_down? Gosu::GpButton1 then
-      @player.brake
-    end
-
+    @player.get_movements(self)
     @player.move
     @player.collect_stars(@stars)
 
